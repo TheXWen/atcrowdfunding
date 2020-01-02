@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+	
+	<!-- 独立的JAVA类及方法 -->
+	<bean id="workJob" class="com.xw.atcrowdfunding.task.FinishWorkTask"></bean>
+	<!-- 配置任务的具体类和方法 -->
+	<bean id="workTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 要调用的bean -->
+		<property name="targetObject" ref="workJob"></property> 
+		<!-- 要调用的Method -->
+		<property name="targetMethod" value="finish"></property>
+		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<!-- 克龙(时间单位)表达式.配置一个触发器 -->
+	<bean id="workTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="workTask"></property>
+		<!--石英表达式，定义了任务的启动时间-->
+		<property name="cronExpression" value="0/3 * * * * ?"></property> 
+	</bean>
+	 
+	<!-- 总调度,用于启动定时器 -->
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers" >
+			<list>
+				<ref bean="workTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>
