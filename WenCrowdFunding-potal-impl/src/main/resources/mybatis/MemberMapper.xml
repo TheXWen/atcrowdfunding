@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.potal.dao.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loginacct" property="loginacct" jdbcType="VARCHAR" />
+    <result column="userpswd" property="userpswd" jdbcType="CHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="authstatus" property="authstatus" jdbcType="CHAR" />
+    <result column="usertype" property="usertype" jdbcType="CHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="cardnum" property="cardnum" jdbcType="VARCHAR" />
+    <result column="accttype" property="accttype" jdbcType="CHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.Member" >
+    insert into t_member (id, loginacct, userpswd, 
+      username, email, authstatus, 
+      usertype, realname, cardnum, 
+      accttype)
+    values (#{id,jdbcType=INTEGER}, #{loginacct,jdbcType=VARCHAR}, #{userpswd,jdbcType=CHAR}, 
+      #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{authstatus,jdbcType=CHAR}, 
+      #{usertype,jdbcType=CHAR}, #{realname,jdbcType=VARCHAR}, #{cardnum,jdbcType=VARCHAR}, 
+      #{accttype,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.Member" >
+    update t_member
+    set loginacct = #{loginacct,jdbcType=VARCHAR},
+      userpswd = #{userpswd,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      authstatus = #{authstatus,jdbcType=CHAR},
+      usertype = #{usertype,jdbcType=CHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      accttype = #{accttype,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, loginacct, userpswd, username, email, authstatus, usertype, realname, 
+    cardnum, accttype, tel
+    from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, loginacct, userpswd, username, email, authstatus, usertype, realname, 
+    cardnum, accttype
+    from t_member
+  </select>
+  
+  <select id="queryMebmerlogin" resultMap="BaseResultMap" >
+  	select id, loginacct, userpswd, username, email, authstatus, usertype, realname, 
+    cardnum, accttype
+    from t_member where loginacct=#{loginacct} and userpswd=#{userpswd}
+  </select>
+
+  <update id="updateAcctType" parameterType="com.xw.atcrowdfunding.bean.Member" >
+    update t_member
+    set
+      accttype = #{accttype,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBasicinfo" parameterType="com.xw.atcrowdfunding.bean.Member" >
+    update t_member
+    set
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateEmail">
+    update t_member
+    set
+      email = #{email}
+    where id = #{id}
+  </update>
+
+  <update id="updateAuthstatus">
+    update t_member
+    set
+      authstatus = #{authstatus}
+    where id = #{id}
+  </update>
+
+  <select id="getMemberById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, loginacct, userpswd, username, email, authstatus, usertype, realname,
+    cardnum, accttype, tel
+    from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryCertByMemberid" resultType="map">
+    SELECT t_cert.name, t_cert.id, t_member_cert.iconpath
+     FROM t_cert JOIN t_member_cert
+     ON t_cert.id = t_member_cert.certid
+     WHERE t_member_cert.memberid = #{memberid};
+  </select>
+
+</mapper>
