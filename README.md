@@ -1,2 +1,3 @@
 # atcrowdfunding
-![](https://github.com/TheXWen/atcrowdfunding/blob/master/EffectMap/index.JPG)
+![](raw/master/EffectMap/index.jpg)
+![](raw/master/EffectMap/login.jpg)
