@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.RolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.RolePermission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+    <result column="permissionid" property="permissionid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_role_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.RolePermission" >
+    insert into t_role_permission (id, roleid, permissionid
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.RolePermission" >
+    update t_role_permission
+    set roleid = #{roleid,jdbcType=INTEGER},
+      permissionid = #{permissionid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, roleid, permissionid
+    from t_role_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, roleid, permissionid
+    from t_role_permission
+  </select>
+</mapper>

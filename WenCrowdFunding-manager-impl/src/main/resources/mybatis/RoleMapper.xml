@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.Role" >
+    insert into t_role (id, name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.Role" >
+    update t_role
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, name
+    from t_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name
+    from t_role
+  </select>
+
+  <select id="pageQuery" resultMap="BaseResultMap">
+    select id, name
+    from t_role
+    <where>
+      <if test="queryText != null">name like concat("%", #{queryText}, "%")</if>
+    </where>
+    limit #{startIndex}, #{pagesize}
+  </select>
+
+  <select id="queryCount" resultType="int">
+    select count(*)
+    from t_role
+    <where>
+      <if test="queryText != null">name like concat("%", #{queryText}, "%")</if>
+    </where>
+  </select>
+
+  <delete id="deleteRolePermissionRelationship">
+    delete from t_role_permission
+    where roleid = #{roleid}
+  </delete>
+
+  <insert id="insertRolePermission">
+    insert into t_role_permission (roleid, permissionid)
+    values (#{roleid}, #{permissionid})
+  </insert>
+</mapper>

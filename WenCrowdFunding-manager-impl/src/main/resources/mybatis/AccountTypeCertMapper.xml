@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.AccountTypeCertMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.AccountTypeCert" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="accttype" property="accttype" jdbcType="CHAR" />
+    <result column="certid" property="certid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.AccountTypeCert" >
+    insert into t_account_type_cert (id, accttype, certid
+      )
+    values (#{id,jdbcType=INTEGER}, #{accttype,jdbcType=CHAR}, #{certid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.AccountTypeCert" >
+    update t_account_type_cert
+    set accttype = #{accttype,jdbcType=CHAR},
+      certid = #{certid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, accttype, certid
+    from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, accttype, certid
+    from t_account_type_cert
+  </select>
+
+  <select id="queryCertAccttype" resultType="map" >
+    select accttype, certid
+    from t_account_type_cert
+  </select>
+
+  <insert id="insertAcctTypeCert">
+    insert into t_account_type_cert (accttype, certid
+      )
+    values (#{accttype}, #{certid}
+      )
+  </insert>
+
+  <delete id="deleteAcctTypeCert">
+    delete from t_account_type_cert
+    where accttype = #{accttype} and certid = #{certid}
+  </delete>
+
+</mapper>

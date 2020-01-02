@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.Permission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.Permission" >
+    insert into t_permission (id, pid, name, 
+      icon, url)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.Permission" >
+    update t_permission
+    set
+      name = #{name,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, pid, name, icon, url
+    from t_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryAllPermission" resultMap="BaseResultMap" >
+    select id, pid, name, icon, url
+    from t_permission
+  </select>
+
+  <select id="getRootPermission" resultType="Permission">
+    select id, pid, name, icon, url
+    from t_permission where pid is null
+  </select>
+  <select id="getChildrenPermissionByPid" parameterType="int" resultMap="BaseResultMap">
+    select id, pid, name, icon, url
+    from t_permission where pid = #{id}
+  </select>
+
+  <select id="queryPermissionidsByRoleid" parameterType="int" resultType="int">
+    select permissionid
+    from t_role_permission where roleid = #{roleid}
+  </select>
+
+</mapper>

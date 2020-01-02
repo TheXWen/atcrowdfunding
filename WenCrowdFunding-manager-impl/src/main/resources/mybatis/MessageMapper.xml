@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.Message" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="memberid" property="memberid" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="senddate" property="senddate" jdbcType="CHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.Message" >
+    insert into t_message (id, memberid, content, 
+      senddate)
+    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{senddate,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.Message" >
+    update t_message
+    set memberid = #{memberid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      senddate = #{senddate,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, memberid, content, senddate
+    from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, memberid, content, senddate
+    from t_message
+  </select>
+</mapper>

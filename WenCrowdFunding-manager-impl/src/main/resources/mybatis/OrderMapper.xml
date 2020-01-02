@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xw.atcrowdfunding.manager.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xw.atcrowdfunding.bean.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="memberid" property="memberid" jdbcType="INTEGER" />
+    <result column="projectid" property="projectid" jdbcType="INTEGER" />
+    <result column="returnid" property="returnid" jdbcType="INTEGER" />
+    <result column="ordernum" property="ordernum" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="CHAR" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+    <result column="rtncount" property="rtncount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="invoice" property="invoice" jdbcType="CHAR" />
+    <result column="invoictitle" property="invoictitle" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xw.atcrowdfunding.bean.Order" >
+    insert into t_order (id, memberid, projectid, 
+      returnid, ordernum, createdate, 
+      money, rtncount, status, 
+      address, invoice, invoictitle, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
+      #{returnid,jdbcType=INTEGER}, #{ordernum,jdbcType=VARCHAR}, #{createdate,jdbcType=CHAR}, 
+      #{money,jdbcType=INTEGER}, #{rtncount,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
+      #{address,jdbcType=VARCHAR}, #{invoice,jdbcType=CHAR}, #{invoictitle,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xw.atcrowdfunding.bean.Order" >
+    update t_order
+    set memberid = #{memberid,jdbcType=INTEGER},
+      projectid = #{projectid,jdbcType=INTEGER},
+      returnid = #{returnid,jdbcType=INTEGER},
+      ordernum = #{ordernum,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=CHAR},
+      money = #{money,jdbcType=INTEGER},
+      rtncount = #{rtncount,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      address = #{address,jdbcType=VARCHAR},
+      invoice = #{invoice,jdbcType=CHAR},
+      invoictitle = #{invoictitle,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, memberid, projectid, returnid, ordernum, createdate, money, rtncount, 
+    status, address, invoice, invoictitle, remark
+    from t_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, memberid, projectid, returnid, ordernum, createdate, money, rtncount, 
+    status, address, invoice, invoictitle, remark
+    from t_order
+  </select>
+</mapper>
