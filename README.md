@@ -1,2 +1,2 @@
 # atcrowdfunding
-![](https://github.com/TheXWen/atcrowdfunding/raw/master/EffectMap/index.JPG)
+https://github.com/TheXWen/atcrowdfunding/raw/master/EffectMap/index.JPG
